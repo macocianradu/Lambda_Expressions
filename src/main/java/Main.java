@@ -13,13 +13,14 @@ import java.util.stream.Stream;
 public class Main {
     public static void main(String[] args) {
         Stream<String> data = null;
-        HashMap<String, Integer> activityNr = new HashMap<String, Integer>();
+        HashMap<String, Integer> activityNr = new HashMap<>();
         HashMap<Integer, Integer> mapActivityDay = new HashMap<>();
         ArrayList<ActivityDay> activityDays = new ArrayList<>();
         HashMap<String, Long> durations = new HashMap<>();
         HashMap<String, Integer> filter = new HashMap<>();
         ArrayList<String> toRemove = new ArrayList<>();
         ArrayList<String> write = new ArrayList<>();
+        ArrayList<MonitoredData> monitoredData = new ArrayList<>();
 
         int days, day;
 
@@ -31,12 +32,8 @@ public class Main {
 
         ArrayList<String> s = new ArrayList<String>();
         data.forEach(w -> {
+            String[] token = w.split("\t\t");
             s.add(w);
-        });
-        ArrayList<MonitoredData> monitoredData = new ArrayList<>();
-
-        for(String m : s){
-            String[] token = m.split("\t\t");
             while(token[2].endsWith("\t")){
                 token[2] = token[2].substring(0, token[2].length()-1);
             }
@@ -48,7 +45,7 @@ public class Main {
                 filter.putIfAbsent(token[2], 0);
                 filter.put(token[2], filter.get(token[2]) + 1);
             }
-        }
+        });
 
         days = setDay(monitoredData.get(0).startTime, monitoredData.get(monitoredData.size() - 1).endTime);
         //System.out.println("Days passed: " + days);
